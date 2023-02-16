@@ -5,16 +5,19 @@ class WorkoutModel {
   List<ExerciseModel>? exercises;
   int? index;
 
-  WorkoutModel({this.title, this.exercises});
+  WorkoutModel({this.title, this.exercises, this.index});
 
-  WorkoutModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+  factory WorkoutModel.fromJson(Map<String, dynamic> json, int workoutIndex) {
+    int index = 0;
+    List<ExerciseModel> exercises = <ExerciseModel>[];
     if (json['exercises'] != null) {
-      exercises = <ExerciseModel>[];
-      json['exercises'].forEach((v) {
-        exercises!.add(new ExerciseModel.fromJson(v));
+      json['exercises'].forEach((exercise) {
+        exercises!.add(new ExerciseModel.fromJson(exercise,index));
+        index++;
       });
     }
+
+    return WorkoutModel(title: json['title'], exercises: exercises,index: workoutIndex);
   }
 
   Map<String, dynamic> toJson() {

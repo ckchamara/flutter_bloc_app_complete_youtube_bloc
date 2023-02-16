@@ -6,10 +6,12 @@ class ExerciseModel {
 
   ExerciseModel({this.title, this.prelude, this.duration, this.index});
 
-  ExerciseModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    prelude = json['prelude'];
-    duration = json['duration'];
+  factory ExerciseModel.fromJson(Map<String, dynamic> json, int index) {
+    return ExerciseModel(
+        title: json['title'],
+        prelude: json['prelude'],
+        duration: json['duration'],
+        index: index);
   }
 
   Map<String, dynamic> toJson() {
