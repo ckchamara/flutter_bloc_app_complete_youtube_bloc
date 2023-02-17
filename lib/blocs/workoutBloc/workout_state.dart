@@ -7,15 +7,20 @@ class WorkoutInitial extends WorkoutState {
   @override
   List<Object?> get props => [];
 }
-class WorkoutDataFetch extends WorkoutState {
+class WorkoutDataFetchState extends WorkoutState {
   List<WorkoutModel>? workouts;
 
-  WorkoutDataFetch(this.workouts);
+  WorkoutDataFetchState(this.workouts);
 
   @override
   List<Object?> get props => [workouts];
 }
-class WorkoutDataFetched extends WorkoutState {
+class WorkoutDataFetchedState extends WorkoutState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FailToLoadWorkoutListState extends WorkoutState {
   @override
   List<Object?> get props => [];
 }

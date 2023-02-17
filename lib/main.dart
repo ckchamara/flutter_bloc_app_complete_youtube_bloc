@@ -8,13 +8,12 @@ import 'modal/workouts.dart';
 
 void main(){
   runApp(const WorkoutApp());
-  _fetchWorkoutListe();
 }
 
 _fetchWorkoutListe() async {
   String json = await rootBundle.loadString('assets/workouts.json');
   int index= 0;
-  List<dynamic> jsonlist = jsonDecode(json);
+  var jsonlist = jsonDecode(json);
   List<WorkoutModel> workoutss = jsonlist.map((wrkout) {
     WorkoutModel singleWorkout = WorkoutModel.fromJson(wrkout, index);
     index++;

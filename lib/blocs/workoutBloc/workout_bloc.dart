@@ -14,23 +14,26 @@ part 'workout_state.dart';
 class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   WorkoutBloc() : super(WorkoutInitial()) {
     on<FetchWorkoutListEvent>(_fetchWorkoutList);
-
+    // on<EditWorkoutListEvent>(null);
   }
 
-  Stream<void> _fetchWorkoutList(FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async* {
-    String jsonData = await rootBundle.loadString('assets/workout.json');
-    var workoutJson = jsonDecode(jsonData);
-    List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(workoutJson);
-
-    WorkoutModel workoutd;
-    // emit(WorkoutDataFetch());
+  _fetchWorkoutList(FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async* {
+    try{
+      final jsonData = await rootBundle.loadString('assets/workout.json');
+      var workoutJson = jsonDecode(jsonData);
+      int index = 0;
+       List<WorkoutModel> workouts = workoutJson.map((wrkout) {
+        WorkoutModel workout = WorkoutModel.fromJson(wrkout, index);
+        index++;
+        return workout;
+      }).toList();
+      if(workouts.isNotEmpty){
+        emit(WorkoutDataFetchState(workouts));
+      }else {
+        emit(FailToLoadWorkoutListState());
+      }
+    }catch (_){
+        emit(FailToLoadWorkoutListState());
+    }
   }
-
-    _fetchWorkoutListe() async* {
-    String jsonData = await rootBundle.loadString('assets/workout.json');
-    var workoutJson = jsonDecode(jsonData);
-    WorkoutModel.fromJson(workoutJson);
-  }
-
-
 }
