@@ -3,7 +3,7 @@ part of 'workout_bloc.dart';
 @immutable
 abstract class WorkoutState extends Equatable {}
 
-class WorkoutInitial extends WorkoutState {
+class WorkoutInitialState extends WorkoutState {
   @override
   List<Object?> get props => [];
 }

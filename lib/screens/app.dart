@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
 
 import 'homeScreen.dart';
 
@@ -8,9 +10,22 @@ class WorkoutApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "WorkoutTime",
-      home: HomeScreen()
-    );
+    return MaterialApp(
+        title: "WorkoutTime",
+        home: MultiBlocProvider(
+            providers: [
+              BlocProvider<WorkoutBloc>(create: (context) {
+                WorkoutBloc workoutBloc = WorkoutBloc();
+                workoutBloc.add(FetchWorkoutListEvent());
+                return workoutBloc;
+              })
+            ],
+            child: BlocBuilder<WorkoutBloc, WorkoutState>(
+                builder: (context, state) {
+              if (state is WorkoutInitialState) {
+                return const HomeScreen();
+              }
+              return const HomeScreen();
+            })));
   }
 }
