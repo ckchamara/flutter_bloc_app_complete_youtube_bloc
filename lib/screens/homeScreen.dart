@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,35 +15,47 @@ class HomeScreen extends StatelessWidget {
             IconButton(onPressed: null, icon: Icon(Icons.settings)),
           ],
         ),
-        body: SingleChildScrollView(
-          child: ExpansionPanelList.radio(
-            children: [
-              ExpansionPanelRadio(
-                value: 3,
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return const ListTile(
-                    title: Text('Panel 1'),
-                  );
-                },
-                body: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: const Text('Content for Panel 3'),
-                ),
-              ),
-              ExpansionPanelRadio(
-                value: 7,
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return const ListTile(
-                    title: Text('Panel 2'),
-                  );
-                },
-                body: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: const Text('Content for Panel 3'),
-                ),
-              ),
-            ],
-          ),
-        ));
+        body: SingleChildScrollView(child:
+            BlocBuilder<WorkoutBloc, WorkoutState>(builder: (context, state) {
+          if (state is WorkoutDataFetchState) {
+            return ExpansionPanelList.radio(
+              children: state.workouts!
+                  .map((workout) => ExpansionPanelRadio(
+                      value: workout,
+                      headerBuilder: (BuildContext context, bool isExpanded) =>
+                          ListTile(
+                            visualDensity: const VisualDensity(
+                                vertical: 0,
+                                horizontal: VisualDensity.minimumDensity),
+                            leading: const IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: null,
+                            ),
+                            title: Text(workout.title.toString()),
+                            trailing: const Text("null"),
+                            onTap: null,
+                          ),
+                      body: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: workout.exercises!.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              ListTile(
+                                onTap: null,
+                                visualDensity: const VisualDensity(
+                                    vertical: 0,
+                                    horizontal: VisualDensity.minimumDensity),
+                                leading: Text(workout.exercises![index].prelude!
+                                    .toString()),
+                                title: Text(workout.exercises![index].title!),
+                                trailing: Text(workout
+                                    .exercises![index]!.duration!
+                                    .toString()),
+                              ))))
+                  .toList(),
+            );
+          }
+
+          return Container();
+        })));
   }
 }
