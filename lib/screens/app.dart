@@ -9,23 +9,22 @@ class WorkoutApp extends StatelessWidget {
   const WorkoutApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return MaterialApp(
         title: "WorkoutTime",
         home: MultiBlocProvider(
             providers: [
-              BlocProvider<WorkoutBloc>(create: (BuildContext context) {
-                final workoutBloc = WorkoutBloc();
-                workoutBloc.add(FetchWorkoutListEvent());
-                return workoutBloc;
-              })
+              BlocProvider<WorkoutBloc>(
+                  create: (BuildContext context) =>
+                      WorkoutBloc()..add(const FetchWorkoutListEvent()))
             ],
             child: BlocBuilder<WorkoutBloc, WorkoutState>(
                 builder: (context, state) {
-              if (state is WorkoutInitialState) {  //WorkoutInitialState
+                  print(state);
+              if (state is WorkoutInitialState) {
                 return const HomeScreen();
               }
-              return Container();
+              return const Text("Something went wrong");
             })));
   }
 }

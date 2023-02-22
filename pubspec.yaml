@@ -33,7 +33,6 @@ dependencies:
     sdk: flutter
 
   intl: ^0.17.0
-  bloc: ^8.1.1
   platform: ^3.1.0
   flutter_bloc: ^8.1.1
   hydrated_bloc: ^8.1.0
