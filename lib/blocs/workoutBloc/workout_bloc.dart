@@ -18,20 +18,28 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   }
 
   _fetchWorkoutList(
-      FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async {  //async* makes function not runnable
-    print("works");
+      FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async {
+    //async* makes function not runnable
     try {
       final jsonData = await rootBundle.loadString('assets/workouts.json');
       // Map<String, dynamic> workoutJson = jsonDecode(jsonData);
       final workoutJson = jsonDecode(jsonData);
-      workoutJson.forEach((element) {   print(element); print("       ");});
       int index = 0;
-      List<WorkoutModel> workouts = workoutJson.map((wrkout) {
-        print(wrkout);
-        WorkoutModel workout = WorkoutModel.fromJson(wrkout, index);
+      List<WorkoutModel> workouts = [];
+
+      workoutJson.forEach((element) {
+        WorkoutModel workout = WorkoutModel.fromJson(element, index);
+        workouts.add(workout);
         index++;
-        return workout;
-      }).toList();
+      });
+
+      // List<WorkoutModel> _workouts = workoutJson.map((wrkout) {
+      //   // print(wrkout);
+      //   WorkoutModel workout = WorkoutModel.fromJson(wrkout, index);
+      //   index++;
+      //   return workout;
+      // }).toList();
+
       if (workouts.isNotEmpty) {
         emit(WorkoutDataFetchState(workouts));
       } else {
@@ -41,7 +49,4 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       emit(FailToLoadWorkoutListState());
     }
   }
-
-
-
 }

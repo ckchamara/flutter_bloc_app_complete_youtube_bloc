@@ -20,8 +20,9 @@ class WorkoutApp extends StatelessWidget {
             ],
             child: BlocBuilder<WorkoutBloc, WorkoutState>(
                 builder: (context, state) {
-                  print(state);
-              if (state is WorkoutInitialState) {
+              print("state is $state");
+              if (state is WorkoutInitialState ||
+                  state is WorkoutDataFetchState) {
                 return const HomeScreen();
               }
               return const Text("Something went wrong");
