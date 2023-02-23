@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_app_complete/blocs/helpers/helper.dart';
 import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -32,24 +33,22 @@ class HomeScreen extends StatelessWidget {
                               onPressed: null,
                             ),
                             title: Text(workout.title.toString()),
-                            trailing: const Text("null"),
+                            trailing: Text(formatDuration(workout.workoutDuration)),
                             onTap: null,
                           ),
                       body: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: workout.exercises!.length,
+                          itemCount: workout.exercises.length,
                           itemBuilder: (BuildContext context, int index) =>
                               ListTile(
                                 onTap: null,
                                 visualDensity: const VisualDensity(
                                     vertical: 0,
                                     horizontal: VisualDensity.minimumDensity),
-                                leading: Text(workout.exercises![index].prelude!
-                                    .toString()),
-                                title: Text(workout.exercises![index].title!),
-                                trailing: Text(workout
-                                    .exercises![index]!.duration!
-                                    .toString()),
+                                leading: Text(formatDuration(workout.exercises[index].prelude)),
+                                title: Text(workout.exercises[index].title),
+                                trailing: Text(formatDuration(workout
+                                    .exercises[index].duration)),
                               ))))
                   .toList(),
             );

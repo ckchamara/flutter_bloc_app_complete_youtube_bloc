@@ -14,7 +14,6 @@ part 'workout_state.dart';
 class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   WorkoutBloc() : super(WorkoutInitialState()) {
     on<FetchWorkoutListEvent>(_fetchWorkoutList);
-    // on<EditWorkoutListEvent>(null);
   }
 
   _fetchWorkoutList(
@@ -33,20 +32,14 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
         index++;
       });
 
-      // List<WorkoutModel> _workouts = workoutJson.map((wrkout) {
-      //   // print(wrkout);
-      //   WorkoutModel workout = WorkoutModel.fromJson(wrkout, index);
-      //   index++;
-      //   return workout;
-      // }).toList();
-
       if (workouts.isNotEmpty) {
         emit(WorkoutDataFetchState(workouts));
       } else {
         emit(FailToLoadWorkoutListState());
       }
-    } catch (_) {
+    } catch (e) {
       emit(FailToLoadWorkoutListState());
+      print("$e");
     }
   }
 }
