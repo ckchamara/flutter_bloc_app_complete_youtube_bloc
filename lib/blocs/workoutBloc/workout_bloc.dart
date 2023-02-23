@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../modal/exercise.dart';
 import '../../modal/workouts.dart';
 
 part 'workout_event.dart';
@@ -14,6 +15,7 @@ part 'workout_state.dart';
 class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   WorkoutBloc() : super(WorkoutInitialState()) {
     on<FetchWorkoutListEvent>(_fetchWorkoutList);
+    on<EditWorkoutListEvent>(_editWorkoutList);
   }
 
   _fetchWorkoutList(
@@ -42,4 +44,13 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       print("$e");
     }
   }
+
+
+
+
+  _editWorkoutList(EditWorkoutListEvent event, Emitter<WorkoutState> emit) {
+
+  }
+
+
 }

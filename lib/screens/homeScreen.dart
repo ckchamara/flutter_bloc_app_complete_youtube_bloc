@@ -16,7 +16,8 @@ class HomeScreen extends StatelessWidget {
             IconButton(onPressed: null, icon: Icon(Icons.settings)),
           ],
         ),
-        body: SingleChildScrollView(child:
+        body: SingleChildScrollView(
+            child:
             BlocBuilder<WorkoutBloc, WorkoutState>(builder: (context, state) {
           if (state is WorkoutDataFetchState) {
             return ExpansionPanelList.radio(
@@ -33,7 +34,8 @@ class HomeScreen extends StatelessWidget {
                               onPressed: null,
                             ),
                             title: Text(workout.title.toString()),
-                            trailing: Text(formatDuration(workout.workoutDuration)),
+                            trailing:
+                                Text(formatDuration(workout.workoutDuration)),
                             onTap: null,
                           ),
                       body: ListView.builder(
@@ -45,10 +47,11 @@ class HomeScreen extends StatelessWidget {
                                 visualDensity: const VisualDensity(
                                     vertical: 0,
                                     horizontal: VisualDensity.minimumDensity),
-                                leading: Text(formatDuration(workout.exercises[index].prelude)),
+                                leading: Text(formatDuration(
+                                    workout.exercises[index].prelude)),
                                 title: Text(workout.exercises[index].title),
-                                trailing: Text(formatDuration(workout
-                                    .exercises[index].duration)),
+                                trailing: Text(formatDuration(
+                                    workout.exercises[index].duration)),
                               ))))
                   .toList(),
             );

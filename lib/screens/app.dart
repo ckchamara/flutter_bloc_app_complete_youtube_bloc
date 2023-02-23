@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
+import 'package:flutter_bloc_app_complete/screens/editWorkoutScreen.dart';
 
 import 'homeScreen.dart';
 
@@ -24,6 +25,8 @@ class WorkoutApp extends StatelessWidget {
               if (state is WorkoutInitialState ||
                   state is WorkoutDataFetchState) {
                 return const HomeScreen();
+              }else if(state is EditWorkoutListState){
+                return const EditWorkoutScreen();
               }
               return const Text("Something went wrong");
             })));
