@@ -32,7 +32,7 @@ class EditWorkoutScreen extends StatelessWidget {
                     itemCount: editWorkoutListState.exercises.length,
                     itemBuilder: (BuildContext context, int index) =>
                         ListTile(
-                          onTap: null,
+                          onTap: () => BlocProvider.of<WorkoutBloc>(context).add(EditExerciseListEvent(editWorkoutListState.exercises, editWorkoutListState.title)),
                           visualDensity: const VisualDensity(
                               vertical: 0,
                               horizontal: VisualDensity.minimumDensity),
