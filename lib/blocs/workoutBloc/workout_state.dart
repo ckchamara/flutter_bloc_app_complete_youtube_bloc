@@ -29,8 +29,9 @@ class FailToLoadWorkoutListState extends WorkoutState {
 
 class EditWorkoutListState extends WorkoutState {
   final List<ExerciseModel> exercises;
+  final String title;
 
-  EditWorkoutListState(this.exercises);
+  EditWorkoutListState(this.exercises, this.title);
 
   @override
   List<Object?> get props => [exercises];

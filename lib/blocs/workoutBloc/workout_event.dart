@@ -11,6 +11,7 @@ class FetchWorkoutListEvent extends WorkoutEvent {
 
 class EditWorkoutListEvent extends WorkoutEvent {
   List<ExerciseModel> exercises;
+  String title;
 
-  EditWorkoutListEvent(this.exercises);
+  EditWorkoutListEvent(this.exercises, this.title);
 }
