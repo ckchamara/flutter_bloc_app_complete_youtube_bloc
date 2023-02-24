@@ -54,7 +54,6 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                         itemHeight: 30,
                         minValue: 0,
                         maxValue: 3599,
-                        step: 10,
                         haptics: true,
                         onChanged: (value) => null)),
               ),
