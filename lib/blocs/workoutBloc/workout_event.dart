@@ -10,5 +10,7 @@ class FetchWorkoutListEvent extends WorkoutEvent {
 }
 
 class EditWorkoutListEvent extends WorkoutEvent {
-  const EditWorkoutListEvent();
+  List<ExerciseModel> exercises;
+
+  EditWorkoutListEvent(this.exercises);
 }

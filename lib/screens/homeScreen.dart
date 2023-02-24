@@ -16,8 +16,7 @@ class HomeScreen extends StatelessWidget {
             IconButton(onPressed: null, icon: Icon(Icons.settings)),
           ],
         ),
-        body: SingleChildScrollView(
-            child:
+        body: SingleChildScrollView(child:
             BlocBuilder<WorkoutBloc, WorkoutState>(builder: (context, state) {
           if (state is WorkoutDataFetchState) {
             return ExpansionPanelList.radio(
@@ -29,9 +28,11 @@ class HomeScreen extends StatelessWidget {
                             visualDensity: const VisualDensity(
                                 vertical: 0,
                                 horizontal: VisualDensity.minimumDensity),
-                            leading: const IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: null,
+                            leading: IconButton(
+                              onPressed: () =>
+                                  BlocProvider.of<WorkoutBloc>(context)
+                                      .add(EditWorkoutListEvent(workout.exercises)),
+                              icon: const Icon(Icons.edit),
                             ),
                             title: Text(workout.title.toString()),
                             trailing:

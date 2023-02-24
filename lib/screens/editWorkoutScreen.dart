@@ -11,6 +11,11 @@ class EditWorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => BlocProvider.of<WorkoutBloc>(context)
+                .add(const FetchWorkoutListEvent()),
+          ),
           title: const Text("Workout Time"),
           actions: const [
             IconButton(onPressed: null, icon: Icon(Icons.calendar_month)),
@@ -24,17 +29,16 @@ class EditWorkoutScreen extends StatelessWidget {
               return ListView.builder(
                   shrinkWrap: true,
                   itemCount: workoutState.exercises.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      ListTile(
+                  itemBuilder: (BuildContext context, int index) => ListTile(
                         onTap: null,
                         visualDensity: const VisualDensity(
                             vertical: 0,
                             horizontal: VisualDensity.minimumDensity),
-                        leading: Text(
-                            formatDuration(workoutState.exercises[index].prelude)),
+                        leading: Text(formatDuration(
+                            workoutState.exercises[index].prelude)),
                         title: Text(workoutState.exercises[index].title),
-                        trailing: Text(formatDuration(workoutState
-                            .exercises[index].duration)),
+                        trailing: Text(formatDuration(
+                            workoutState.exercises[index].duration)),
                       ));
             },
           ),
