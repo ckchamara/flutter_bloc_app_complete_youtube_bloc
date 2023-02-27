@@ -16,7 +16,6 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   WorkoutBloc() : super(WorkoutInitialState()) {
     on<FetchWorkoutListEvent>(_fetchWorkoutList);
     on<EditWorkoutListEvent>(_editWorkoutList);
-    // on<EditExerciseListEvent>(_editExerciseList);
   }
 
   _fetchWorkoutList(
@@ -46,15 +45,13 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     }
   }
 
-
   _editWorkoutList(EditWorkoutListEvent event, Emitter<WorkoutState> emit) {
-    try{
+    try {
       print(event.exIndex);
-    emit(EditWorkoutListState(event.exercises,event.title, exIndex: event.exIndex));
-    }catch(e){
+      emit(EditWorkoutListState(event.exercises, event.title,
+          exIndex: event.exIndex));
+    } catch (e) {
       print("$e");
     }
   }
-
-
 }

@@ -16,12 +16,3 @@ class EditWorkoutListEvent extends WorkoutEvent {
 
   EditWorkoutListEvent(this.exercises, this.title, {this.exIndex});
 }
-
-// class EditExerciseListEvent extends WorkoutEvent {
-//   List<ExerciseModel> exercises;
-//   String title;
-//
-//   EditExerciseListEvent(this.exercises, this.title);
-// }
-
-

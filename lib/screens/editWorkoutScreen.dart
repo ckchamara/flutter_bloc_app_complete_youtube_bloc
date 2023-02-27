@@ -59,6 +59,4 @@ class EditWorkoutScreen extends StatelessWidget {
       },
     );
   }
-
-
 }

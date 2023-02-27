@@ -26,7 +26,7 @@ class WorkoutApp extends StatelessWidget {
               if (state is WorkoutInitialState ||
                   state is WorkoutDataFetchState) {
                 return const HomeScreen();
-              }else if(state is EditWorkoutListState){
+              } else if (state is EditWorkoutListState) {
                 return const EditWorkoutScreen();
               }
               return const Text("Something went wrong");
