@@ -38,13 +38,3 @@ class EditWorkoutListState extends WorkoutState {
   List<Object?> get props => [exercises, title, exIndex];
 }
 
-// class EditExerciseListState extends WorkoutState {
-//   final List<ExerciseModel> exercises;
-//   final String title;
-//
-//   EditExerciseListState(this.exercises, this.title);
-//
-//   @override
-//   List<Object?> get props => [exercises];
-// }
-

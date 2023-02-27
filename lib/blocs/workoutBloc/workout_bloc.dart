@@ -56,9 +56,5 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     }
   }
 
-  // _editExerciseList(EditExerciseListEvent event, Emitter<WorkoutState> emit) {
-  //   emit(EditExerciseListState(event.exercises, event.title));
-  // }
-
 
 }
