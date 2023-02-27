@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
 import 'package:flutter_bloc_app_complete/modal/exercise.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -55,6 +54,9 @@ class _EditExerciseWidgetState extends State<EditExerciseWidget> {
                 content: Text("Yay! A SnackBar! $value"),
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              setState(() {
+
+              });
             }));
   }
 }
