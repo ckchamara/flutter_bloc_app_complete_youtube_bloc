@@ -35,7 +35,7 @@ class EditWorkoutScreen extends StatelessWidget {
                       if (state.exIndex == index) {
                         return EditExerciseWidget(
                             exerciseModel:
-                                editWorkoutListState.exercises[index]);
+                                editWorkoutListState.exercises[index], index: index,);
                       } else {
                         return ListTile(
                             visualDensity: const VisualDensity(

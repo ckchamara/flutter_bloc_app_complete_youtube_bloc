@@ -16,6 +16,9 @@ class EditExerciseWidget extends StatefulWidget {
 
 class _EditExerciseWidgetState extends State<EditExerciseWidget> {
   TextEditingController? _textEditingController;
+   int preludeValue = 0;
+   int durationValue = 0;
+
 
   @override
   void initState() {
@@ -36,27 +39,38 @@ class _EditExerciseWidgetState extends State<EditExerciseWidget> {
           minValue: 0,
           maxValue: 3599,
           haptics: true,
-          onChanged: (value) {},
+          onChanged: (value) {
+
+          },
         ),
         title: TextField(
           textAlign: TextAlign.center,
           controller: _textEditingController,
         ),
-        trailing: NumberPicker(
-            value: widget.exerciseModel.duration,
-            itemHeight: 30,
-            minValue: 0,
-            maxValue: 3599,
-            haptics: true,
-            onChanged: (value) {
-              var snackBar = SnackBar(
-                duration: Duration(),
-                content: Text("Yay! A SnackBar! $value"),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              setState(() {
+        trailing: InkWell(
+          onLongPress: (){
+            showDialog(context: context, builder: (BuildContext context) {
+              return AlertDialog(
+                content: Text("Edit Duration"),
+                actions: [
+                  OutlinedButton(onPressed: (){
 
-              });
-            }));
+                  }, child: Text("Save"))
+                ],
+              );
+            });
+          },
+          child: NumberPicker(
+              value: widget.exerciseModel.duration,
+              itemHeight: 30,
+              minValue: 0,
+              maxValue: 3599,
+              haptics: true,
+              onChanged: (value) {
+                setState(() {
+
+                });
+              }),
+        ));
   }
 }

@@ -37,3 +37,4 @@ class EditWorkoutListState extends WorkoutState {
   @override
   List<Object?> get props => [exercises, title, exIndex];
 }
+
