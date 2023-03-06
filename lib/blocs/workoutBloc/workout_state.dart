@@ -29,12 +29,20 @@ class FailToLoadWorkoutListState extends WorkoutState {
 
 class EditWorkoutListState extends WorkoutState {
   final WorkoutModel workout;
-  // final int workoutIndex;
   final int? exIndex;
 
   EditWorkoutListState({required this.workout, this.exIndex});
 
   @override
   List<Object?> get props => [workout, exIndex];
+}
+
+class SaveEditedExerciseState extends WorkoutDataFetchState {
+  SaveEditedExerciseState(super.workouts);
+
+
+  @override
+  List<Object?> get props => [];
+
 }
 

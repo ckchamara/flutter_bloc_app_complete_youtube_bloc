@@ -16,6 +16,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   WorkoutBloc() : super(WorkoutInitialState()) {
     on<FetchWorkoutListEvent>(_fetchWorkoutList);
     on<EditWorkoutListEvent>(_editWorkoutList);
+    on<SaveEditedExerciseEvent>(_editExercise);
   }
 
   _fetchWorkoutList(
@@ -54,5 +55,13 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     } catch (e) {
       print("$e");
     }
+  }
+
+  _editExercise(SaveEditedExerciseEvent event, Emitter<WorkoutState> emit) {
+
+    WorkoutDataFetchState statke = state as WorkoutDataFetchState;
+    statke.workouts![event.workout.index]?.copyWith(
+      exercises: event.workout.exercises
+    );
   }
 }

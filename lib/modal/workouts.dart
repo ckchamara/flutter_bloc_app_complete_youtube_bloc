@@ -41,4 +41,16 @@ class WorkoutModel {
     }
     return data;
   }
+
+  WorkoutModel copyWith(
+          {String? title,
+          List<ExerciseModel>? exercises,
+          int? index,
+          int? workoutDuration}) =>
+      WorkoutModel(
+        title: title ?? this.title,
+        exercises: this.exercises,
+        index: index ?? this.index,
+        workoutDuration: this.workoutDuration,
+      );
 }

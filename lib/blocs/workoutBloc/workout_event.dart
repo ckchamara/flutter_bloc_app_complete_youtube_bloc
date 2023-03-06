@@ -11,8 +11,13 @@ class FetchWorkoutListEvent extends WorkoutEvent {
 
 class EditWorkoutListEvent extends WorkoutEvent {
   final WorkoutModel workout;
-  // final int workoutIndex;
   final int? exIndex;
 
   EditWorkoutListEvent({required this.workout, this.exIndex});
+}
+
+class SaveEditedExerciseEvent extends WorkoutEvent {
+  final WorkoutModel workout;
+
+  SaveEditedExerciseEvent(this.workout);
 }

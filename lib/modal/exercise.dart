@@ -22,4 +22,19 @@ class ExerciseModel {
     data['duration'] = this.duration;
     return data;
   }
+
+  ExerciseModel copyWith(
+      {int? prelude,
+        String? title,
+        int? duration,
+        int? index,
+        int? startTime}) =>
+      ExerciseModel(
+          title: title ?? this.title,
+          prelude: prelude ?? this.prelude,
+          duration: duration ?? this.duration,
+          index: index ?? this.index,
+          startTime: startTime ?? this.startTime);
+
 }
+
