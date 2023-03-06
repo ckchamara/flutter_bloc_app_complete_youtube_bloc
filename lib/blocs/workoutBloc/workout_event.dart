@@ -10,9 +10,9 @@ class FetchWorkoutListEvent extends WorkoutEvent {
 }
 
 class EditWorkoutListEvent extends WorkoutEvent {
-  List<ExerciseModel> exercises;
-  String title;
-  int? exIndex;
+  final WorkoutModel workout;
+  // final int workoutIndex;
+  final int? exIndex;
 
-  EditWorkoutListEvent(this.exercises, this.title, {this.exIndex});
+  EditWorkoutListEvent({required this.workout, this.exIndex});
 }

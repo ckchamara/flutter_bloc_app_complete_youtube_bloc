@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_app_complete/modal/exercise.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class EditExerciseWidget extends StatefulWidget {
-  ExerciseModel exerciseModel;
-  int? index;
+import '../modal/workouts.dart';
 
-  EditExerciseWidget({Key? key, required this.exerciseModel, this.index})
-      : super(key: key);
+class EditExerciseWidget extends StatefulWidget {
+  WorkoutModel workout;
+  int exIndex;
+
+  EditExerciseWidget({super.key, required this.workout, required this.exIndex});
 
   @override
   State<EditExerciseWidget> createState() => _EditExerciseWidgetState();
@@ -16,14 +17,13 @@ class EditExerciseWidget extends StatefulWidget {
 
 class _EditExerciseWidgetState extends State<EditExerciseWidget> {
   TextEditingController? _textEditingController;
-   int preludeValue = 0;
-   int durationValue = 0;
-
+  int preludeValue = 0;
+  int durationValue = 0;
 
   @override
   void initState() {
     _textEditingController =
-        TextEditingController(text: widget.exerciseModel.title);
+        TextEditingController(text: widget.workout.title);
     super.initState();
   }
 
@@ -33,43 +33,71 @@ class _EditExerciseWidgetState extends State<EditExerciseWidget> {
         onTap: null,
         visualDensity: const VisualDensity(
             vertical: 0, horizontal: VisualDensity.minimumDensity),
-        leading: NumberPicker(
-          value: widget.exerciseModel.prelude,
-          itemHeight: 30,
-          minValue: 0,
-          maxValue: 3599,
-          haptics: true,
-          onChanged: (value) {
-
+        leading: InkWell(
+          onLongPress: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: const Text("Edit Prelude"),
+                    actions: [
+                      const TextField(
+                        textAlign: TextAlign.center,
+                        decoration:
+                            InputDecoration(hintText: "Prelude(in Seconds)"),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      OutlinedButton(
+                          onPressed: () {}, child: const Text("Save")),
+                    ],
+                  );
+                });
           },
+          child: NumberPicker(
+            value: widget.workout.exercises[widget.exIndex].prelude,
+            itemHeight: 30,
+            minValue: 0,
+            maxValue: 3599,
+            haptics: true,
+            onChanged: (value) {},
+          ),
         ),
         title: TextField(
           textAlign: TextAlign.center,
           controller: _textEditingController,
         ),
         trailing: InkWell(
-          onLongPress: (){
-            showDialog(context: context, builder: (BuildContext context) {
-              return AlertDialog(
-                content: Text("Edit Duration"),
-                actions: [
-                  OutlinedButton(onPressed: (){
-
-                  }, child: Text("Save"))
-                ],
-              );
-            });
+          onLongPress: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: const Text("Edit Duration"),
+                    actions: [
+                      const TextField(
+                        textAlign: TextAlign.center,
+                        decoration:
+                            InputDecoration(hintText: "Duration(in Seconds)"),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      OutlinedButton(
+                          onPressed: () {}, child: const Text("Save")),
+                    ],
+                  );
+                });
           },
           child: NumberPicker(
-              value: widget.exerciseModel.duration,
+              value: widget.workout.exercises[widget.exIndex].duration,
               itemHeight: 30,
               minValue: 0,
               maxValue: 3599,
               haptics: true,
               onChanged: (value) {
-                setState(() {
-
-                });
+                setState(() {});
               }),
         ));
   }

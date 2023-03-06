@@ -48,7 +48,8 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   _editWorkoutList(EditWorkoutListEvent event, Emitter<WorkoutState> emit) {
     try {
       print(event.exIndex);
-      emit(EditWorkoutListState(event.exercises, event.title,
+      emit(EditWorkoutListState(
+          workout: event.workout,
           exIndex: event.exIndex));
     } catch (e) {
       print("$e");
