@@ -21,3 +21,4 @@ class SaveEditedExerciseEvent extends WorkoutEvent {
 
   SaveEditedExerciseEvent(this.workout);
 }
+

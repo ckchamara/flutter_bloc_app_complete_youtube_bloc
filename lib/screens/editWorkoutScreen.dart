@@ -11,50 +11,50 @@ class EditWorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WorkoutBloc, WorkoutState>(
       builder: (context, state) {
-        EditWorkoutListState editWorkoutListState =
-        state as EditWorkoutListState;
-        return Scaffold(
-            appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () =>
-                    BlocProvider.of<WorkoutBloc>(context)
-                        .add(const FetchWorkoutListEvent()),
+        if (state is EditWorkoutListState) {
+          return Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      // BlocProvider.of<WorkoutBloc>(context)
+                      //     .add(const FetchWorkoutListEvent());
+                    }),
+                title: Text(state.workout.title),
+                actions: const [
+                  IconButton(onPressed: null, icon: Icon(Icons.calendar_month)),
+                  IconButton(onPressed: null, icon: Icon(Icons.settings)),
+                ],
               ),
-              title: Text(editWorkoutListState.workout.title),
-              actions: const [
-                IconButton(onPressed: null, icon: Icon(Icons.calendar_month)),
-                IconButton(onPressed: null, icon: Icon(Icons.settings)),
-              ],
-            ),
-            body: SingleChildScrollView(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: editWorkoutListState.workout.exercises.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (state.exIndex == index) {
-                        return EditExerciseWidget(
-                            workout: editWorkoutListState.workout,
-                            exIndex: index);
-                      } else {
-                        return ListTile(
-                            visualDensity: const VisualDensity(
-                                vertical: 0,
-                                horizontal: VisualDensity.minimumDensity),
-                            leading: Text(formatDuration(editWorkoutListState
-                                .workout.exercises[index].prelude)),
-                            title: Text(editWorkoutListState
-                                .workout.exercises[index].title),
-                            trailing: Text(formatDuration(editWorkoutListState
-                                .workout.exercises[index].duration)),
-                            onTap: () {
-                              BlocProvider.of<WorkoutBloc>(context).add(
-                                  EditWorkoutListEvent(
-                                      workout: editWorkoutListState.workout,
-                                      exIndex: index));
-                            });
-                      }
-                    })));
+              body: SingleChildScrollView(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.workout.exercises.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (state.exIndex == index) {
+                          return EditExerciseWidget(
+                              workout: state.workout, exIndex: index);
+                        } else {
+                          return ListTile(
+                              visualDensity: const VisualDensity(
+                                  vertical: 0,
+                                  horizontal: VisualDensity.minimumDensity),
+                              leading: Text(formatDuration(
+                                  state.workout.exercises[index].prelude)),
+                              title: Text(state.workout.exercises[index].title),
+                              trailing: Text(formatDuration(
+                                  state.workout.exercises[index].duration)),
+                              onTap: () {
+                                BlocProvider.of<WorkoutBloc>(context).add(
+                                    EditWorkoutListEvent(
+                                        workout: state.workout,
+                                        exIndex: index));
+                              });
+                        }
+                      })));
+        }
+        return Container();
       },
     );
   }

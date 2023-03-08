@@ -29,9 +29,11 @@ class HomeScreen extends StatelessWidget {
                                 vertical: 0,
                                 horizontal: VisualDensity.minimumDensity),
                             leading: IconButton(
-                              onPressed: () =>
-                                  BlocProvider.of<WorkoutBloc>(context).add(
-                                      EditWorkoutListEvent(workout: workout)),
+                              onPressed: () {
+                                BlocProvider.of<WorkoutBloc>(context).add(
+                                    EditWorkoutListEvent(workout: workout));
+                                Navigator.pushNamed(context, '/editWorkoutScreen');
+                              },
                               icon: const Icon(Icons.edit),
                             ),
                             title: Text(workout.title.toString()),

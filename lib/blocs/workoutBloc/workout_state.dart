@@ -17,10 +17,6 @@ class WorkoutDataFetchState extends WorkoutState {
   List<Object?> get props => [workouts];
 }
 
-class WorkoutDataFetchedState extends WorkoutState {
-  @override
-  List<Object?> get props => [];
-}
 
 class FailToLoadWorkoutListState extends WorkoutState {
   @override
@@ -37,12 +33,4 @@ class EditWorkoutListState extends WorkoutState {
   List<Object?> get props => [workout, exIndex];
 }
 
-class SaveEditedExerciseState extends WorkoutDataFetchState {
-  SaveEditedExerciseState(super.workouts);
-
-
-  @override
-  List<Object?> get props => [];
-
-}
 

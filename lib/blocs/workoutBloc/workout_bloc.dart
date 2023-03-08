@@ -22,6 +22,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   _fetchWorkoutList(
       FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async {
     //async* makes function not runnable
+
     try {
       final jsonData = await rootBundle.loadString('assets/workouts.json');
       // Map<String, dynamic> workoutJson = jsonDecode(jsonData);
@@ -44,6 +45,12 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       emit(FailToLoadWorkoutListState());
       print("$e");
     }
+
+
+    // Usage
+    final myBloc = WorkoutBloc();
+    final currentState = myBloc.state;
+    final myStateVariable = (currentState as WorkoutDataFetchState).workouts;
   }
 
   _editWorkoutList(EditWorkoutListEvent event, Emitter<WorkoutState> emit) {
