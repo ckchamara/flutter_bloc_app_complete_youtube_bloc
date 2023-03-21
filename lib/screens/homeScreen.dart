@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text("Workout Time"),
           actions: const [
             IconButton(onPressed: null, icon: Icon(Icons.calendar_month)),
@@ -32,7 +33,8 @@ class HomeScreen extends StatelessWidget {
                               onPressed: () {
                                 BlocProvider.of<WorkoutBloc>(context).add(
                                     EditWorkoutListEvent(workout: workout));
-                                Navigator.pushNamed(context, '/editWorkoutScreen');
+                                Navigator.pushNamed(
+                                    context, '/editWorkoutScreen');
                               },
                               icon: const Icon(Icons.edit),
                             ),

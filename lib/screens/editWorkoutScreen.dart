@@ -17,9 +17,10 @@ class EditWorkoutScreen extends StatelessWidget {
                 leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.pop(context);
-                      // BlocProvider.of<WorkoutBloc>(context)
-                      //     .add(const FetchWorkoutListEvent());
+                      // Navigator.pop(context);
+                      BlocProvider.of<WorkoutBloc>(context)
+                          .add(const FetchWorkoutListEvent());
+                      Navigator.pushNamed(context, '/');
                     }),
                 title: Text(state.workout.title),
                 actions: const [

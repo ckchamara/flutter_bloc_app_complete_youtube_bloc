@@ -19,22 +19,26 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     on<SaveEditedExerciseEvent>(_editExercise);
   }
 
+  List<WorkoutModel> workouts = [];
+
   _fetchWorkoutList(
       FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async {
     //async* makes function not runnable
 
     try {
-      final jsonData = await rootBundle.loadString('assets/workouts.json');
-      // Map<String, dynamic> workoutJson = jsonDecode(jsonData);
-      final workoutJson = jsonDecode(jsonData);
-      int index = 0;
-      List<WorkoutModel> workouts = [];
+      if (workouts.isEmpty) {
+        print('inside _fetchworkoutstate');
+        final jsonData = await rootBundle.loadString('assets/workouts.json');
+        // Map<String, dynamic> workoutJson = jsonDecode(jsonData);
+        final workoutJson = jsonDecode(jsonData);
+        int index = 0;
 
-      workoutJson.forEach((element) {
-        WorkoutModel workout = WorkoutModel.fromJson(element, index);
-        workouts.add(workout);
-        index++;
-      });
+        workoutJson.forEach((element) {
+          WorkoutModel workout = WorkoutModel.fromJson(element, index);
+          workouts.add(workout);
+          index++;
+        });
+      }
 
       if (workouts.isNotEmpty) {
         emit(WorkoutDataFetchState(workouts));
@@ -43,32 +47,28 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       }
     } catch (e) {
       emit(FailToLoadWorkoutListState());
-      print("$e");
+      print("$e error workout_bloc.dart");
     }
-
 
     // Usage
     final myBloc = WorkoutBloc();
     final currentState = myBloc.state;
-    final myStateVariable = (currentState as WorkoutDataFetchState).workouts;
+    print("State is $currentState workout_bloc.dart");
+    // final myStateVariable = (currentState as WorkoutDataFetchState).workouts;
   }
 
   _editWorkoutList(EditWorkoutListEvent event, Emitter<WorkoutState> emit) {
     try {
       print(event.exIndex);
-      emit(EditWorkoutListState(
-          workout: event.workout,
-          exIndex: event.exIndex));
+      emit(
+          EditWorkoutListState(workout: event.workout, exIndex: event.exIndex));
     } catch (e) {
-      print("$e");
+      print("$e error");
     }
   }
 
   _editExercise(SaveEditedExerciseEvent event, Emitter<WorkoutState> emit) {
-
-    WorkoutDataFetchState statke = state as WorkoutDataFetchState;
-    statke.workouts![event.workout.index]?.copyWith(
-      exercises: event.workout.exercises
-    );
+    workouts[event.workout.index] =
+        WorkoutModel.fromJson(event.workout.toJson(), event.workout.index);
   }
 }

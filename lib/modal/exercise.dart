@@ -5,14 +5,21 @@ class ExerciseModel {
   int index;
   int startTime;
 
-  ExerciseModel({required this.title, required this.prelude, required this.duration, required this.index, required this.startTime});
+  ExerciseModel(
+      {required this.title,
+      required this.prelude,
+      required this.duration,
+      required this.index,
+      required this.startTime});
 
-  factory ExerciseModel.fromJson(Map<String, dynamic> json, int index, int startTime) {
+  factory ExerciseModel.fromJson(
+      Map<String, dynamic> json, int index, int startTime) {
     return ExerciseModel(
         title: json['title'],
         prelude: json['prelude'],
         duration: json['duration'],
-        index: index, startTime: startTime);
+        index: index,
+        startTime: startTime);
   }
 
   Map<String, dynamic> toJson() {
@@ -24,17 +31,15 @@ class ExerciseModel {
   }
 
   ExerciseModel copyWith(
-      {int? prelude,
-        String? title,
-        int? duration,
-        int? index,
-        int? startTime}) =>
+          {int? prelude,
+          String? title,
+          int? duration,
+          int? index,
+          int? startTime}) =>
       ExerciseModel(
           title: title ?? this.title,
           prelude: prelude ?? this.prelude,
           duration: duration ?? this.duration,
           index: index ?? this.index,
           startTime: startTime ?? this.startTime);
-
 }
-
