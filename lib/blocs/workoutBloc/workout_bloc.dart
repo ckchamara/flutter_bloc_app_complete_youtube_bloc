@@ -17,6 +17,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     on<FetchWorkoutListEvent>(_fetchWorkoutList);
     on<EditWorkoutListEvent>(_editWorkoutList);
     on<SaveEditedExerciseEvent>(_editExercise);
+    on<WorkoutInProgressEvent>(_workoutInProgress);
   }
 
   List<WorkoutModel> workouts = [];
@@ -59,7 +60,6 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
   _editWorkoutList(EditWorkoutListEvent event, Emitter<WorkoutState> emit) {
     try {
-      print(event.exIndex);
       emit(
           EditWorkoutListState(workout: event.workout, exIndex: event.exIndex));
     } catch (e) {
@@ -71,4 +71,17 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     workouts[event.workout.index] =
         WorkoutModel.fromJson(event.workout.toJson(), event.workout.index);
   }
+
+  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit) {
+    int workoutPlayed =0;
+    bool resume;
+    bool play;
+    try{
+      emit(WorkoutInProgressState(event.workout));
+    }catch (e){
+      print('error $e');
+    }
+  }
+
+
 }

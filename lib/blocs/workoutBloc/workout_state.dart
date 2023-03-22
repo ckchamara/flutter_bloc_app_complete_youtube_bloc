@@ -17,7 +17,6 @@ class WorkoutDataFetchState extends WorkoutState {
   List<Object?> get props => [workouts];
 }
 
-
 class FailToLoadWorkoutListState extends WorkoutState {
   @override
   List<Object?> get props => [];
@@ -33,4 +32,11 @@ class EditWorkoutListState extends WorkoutState {
   List<Object?> get props => [workout, exIndex];
 }
 
+class WorkoutInProgressState extends WorkoutState {
+  final WorkoutModel workout;
 
+  WorkoutInProgressState(this.workout);
+
+  @override
+  List<Object?> get props => [workout];
+}

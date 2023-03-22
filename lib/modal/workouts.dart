@@ -53,4 +53,14 @@ class WorkoutModel {
         index: index ?? this.index,
         workoutDuration: this.workoutDuration,
       );
+
+  int getTotalWorkoutTime() {
+    return exercises.fold(0, (previousValue, element) => previousValue + element.prelude + element.duration);
+  }
+
+  int getTotalExercises() {
+    return exercises.length;
+  }
+
+
 }
