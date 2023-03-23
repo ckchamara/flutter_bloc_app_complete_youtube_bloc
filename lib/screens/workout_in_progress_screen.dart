@@ -2,7 +2,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
-import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
 
 import '../blocs/helpers/helper.dart';
 
@@ -19,14 +18,26 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<WorkoutBloc, WorkoutState>(
         builder: (context, state) {
-          if(state is WorkoutInProgressState) {
+          if (state is WorkoutInProgressState) {
+            Map<String, dynamic> getStats() {
+              int workoutPlayedTime = state.workoutplayedTime;
+              int workoutRemainingTime =
+                  state.workout.getTotalWorkoutTime() - workoutPlayedTime;
+
+              return {
+                "workoutPlayedTime": workoutPlayedTime,
+                "workoutRemainingTime": workoutRemainingTime,
+              };
+            }
+
             return Scaffold(
                 appBar: AppBar(
                   title: Text(state.workout.title.toString()),
                   leading: BackButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, '/')
-                  ),
+                      onPressed: () {
+                        BlocProvider.of<WorkoutBloc>(context).add(const FetchWorkoutListEvent());
+                        Navigator.pushNamed(context, '/');
+                      }),
                 ),
                 body: Container(
                   padding: const EdgeInsets.all(32),
@@ -42,12 +53,12 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('test'),
+                            Text(formatDuration(state.workoutplayedTime)),
                             DotsIndicator(
                               dotsCount: state.workout.getTotalExercises(),
                               position: 3,
                             ),
-                            Text('-${formatDuration(state.workoutRemainingTime)}')
+                            Text('-${formatDuration(getStats()['workoutRemainingTime'])}')
                           ],
                         ),
                       ),
@@ -69,8 +80,8 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
                                 height: 220,
                                 width: 220,
                                 child: CircularProgressIndicator(
-                                  valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.blue),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.blue),
                                   strokeWidth: 25,
                                   value: 0.3,
                                 ),

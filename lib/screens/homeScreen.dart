@@ -3,11 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_app_complete/blocs/helpers/helper.dart';
 import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    BlocProvider.of<WorkoutBloc>(context).add(FetchWorkoutListEvent());
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -20,6 +32,7 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(child:
             BlocBuilder<WorkoutBloc, WorkoutState>(builder: (context, state) {
           if (state is WorkoutDataFetchState) {
+            print(state);
             return ExpansionPanelList.radio(
               children: state.workouts!
                   .map((workout) => ExpansionPanelRadio(
@@ -42,8 +55,10 @@ class HomeScreen extends StatelessWidget {
                             trailing:
                                 Text(formatDuration(workout.workoutDuration)),
                             onTap: () {
-                              BlocProvider.of<WorkoutBloc>(context).add(WorkoutInProgressEvent(workout));
-                              Navigator.pushNamed(context, '/workoutInProgressScreen');
+                              BlocProvider.of<WorkoutBloc>(context)
+                                  .add(WorkoutInProgressEvent(workout));
+                              Navigator.pushNamed(
+                                  context, '/workoutInProgressScreen');
                             },
                           ),
                       body: ListView.builder(
@@ -65,7 +80,7 @@ class HomeScreen extends StatelessWidget {
             );
           }
 
-          return Container();
+          return Container(color: Colors.red,);
         })));
   }
 }

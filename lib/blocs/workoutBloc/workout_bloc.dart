@@ -32,7 +32,6 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
     try {
       if (workouts.isEmpty) {
-        print('inside _fetchworkoutstate');
         final jsonData = await rootBundle.loadString('assets/workouts.json');
         // Map<String, dynamic> workoutJson = jsonDecode(jsonData);
         final workoutJson = jsonDecode(jsonData);
@@ -56,9 +55,9 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     }
 
     // Usage
-    final myBloc = WorkoutBloc();
-    final currentState = myBloc.state;
-    print("State is $currentState workout_bloc.dart");
+    // final myBloc = WorkoutBloc();
+    // final currentState = myBloc.state;
+    // print("State is $currentState workout_bloc.dart");
     // final myStateVariable = (currentState as WorkoutDataFetchState).workouts;
   }
 
@@ -78,14 +77,18 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
 
 
-  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit) async {
+  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit)  {
 
     int workoutRemainingTime = event.workout.getTotalWorkoutTime();
-    final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) => workoutRemainingTime - count);
+    final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) {
+      while(count<=3){
+        return count;
+      }
+    });
 
-    await emit.forEach(myStream, onData: (data) {
-      emit(WorkoutInProgressState(event.workout, data));
-        return WorkoutInProgressState(event.workout, data);
+     emit.forEach(myStream, onData: (second) {
+      emit(WorkoutInProgressState(event.workout, second));
+        return WorkoutInProgressState(event.workout, second);
     });
 
   }
