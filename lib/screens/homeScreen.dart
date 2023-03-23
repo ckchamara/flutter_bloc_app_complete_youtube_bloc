@@ -43,6 +43,7 @@ class HomeScreen extends StatelessWidget {
                                 Text(formatDuration(workout.workoutDuration)),
                             onTap: () {
                               BlocProvider.of<WorkoutBloc>(context).add(WorkoutInProgressEvent(workout));
+                              Navigator.pushNamed(context, '/workoutInProgressScreen');
                             },
                           ),
                       body: ListView.builder(

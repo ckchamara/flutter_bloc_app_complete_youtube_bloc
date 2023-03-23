@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,12 +21,13 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     on<EditWorkoutListEvent>(_editWorkoutList);
     on<SaveEditedExerciseEvent>(_editExercise);
     on<WorkoutInProgressEvent>(_workoutInProgress);
+
   }
 
   List<WorkoutModel> workouts = [];
 
-  _fetchWorkoutList(
-      FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async {
+  _fetchWorkoutList(FetchWorkoutListEvent event,
+      Emitter<WorkoutState> emit) async {
     //async* makes function not runnable
 
     try {
@@ -72,16 +76,21 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
         WorkoutModel.fromJson(event.workout.toJson(), event.workout.index);
   }
 
-  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit) {
-    int workoutPlayed =0;
-    bool resume;
-    bool play;
-    try{
-      emit(WorkoutInProgressState(event.workout));
-    }catch (e){
-      print('error $e');
-    }
+
+
+  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState?> emit) async {
+
+    int workoutRemainingTime = event.workout.getTotalWorkoutTime();
+    final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) => count);
+
+    await emit.forEach(myStream, onData: (data) {
+        emit(WorkoutInProgressState(event.workout, data));
+
+
+    });
+
+
+
+    
   }
-
-
 }

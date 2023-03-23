@@ -42,12 +42,12 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('${state}'),
+                            Text('test'),
                             DotsIndicator(
                               dotsCount: state.workout.getTotalExercises(),
                               position: 3,
                             ),
-                            Text('-${formatDuration(state.workout.getTotalWorkoutTime())}')
+                            Text('-${formatDuration(state.workoutRemainingTime)}')
                           ],
                         ),
                       ),

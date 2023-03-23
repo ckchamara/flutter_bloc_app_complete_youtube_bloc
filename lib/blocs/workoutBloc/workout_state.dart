@@ -34,9 +34,10 @@ class EditWorkoutListState extends WorkoutState {
 
 class WorkoutInProgressState extends WorkoutState {
   final WorkoutModel workout;
+  final int workoutRemainingTime;
 
-  WorkoutInProgressState(this.workout);
+  WorkoutInProgressState(this.workout,this.workoutRemainingTime);
 
   @override
-  List<Object?> get props => [workout];
+  List<Object?> get props => [workout, workoutRemainingTime];
 }
