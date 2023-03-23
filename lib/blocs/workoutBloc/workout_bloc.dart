@@ -78,19 +78,15 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
 
 
-  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState?> emit) async {
+  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit) async {
 
     int workoutRemainingTime = event.workout.getTotalWorkoutTime();
-    final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) => count);
+    final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) => workoutRemainingTime - count);
 
     await emit.forEach(myStream, onData: (data) {
-        emit(WorkoutInProgressState(event.workout, data));
-
-
+      emit(WorkoutInProgressState(event.workout, data));
+        return WorkoutInProgressState(event.workout, data);
     });
 
-
-
-    
   }
 }
