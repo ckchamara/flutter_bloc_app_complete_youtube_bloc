@@ -36,7 +36,7 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as WorkoutModel;
     BlocProvider.of<WorkoutBloc>(context)
-        .add(WorkoutInProgressEvent(workout: arguments));
+        .add(WorkoutInProgressEvent(workout: arguments, stopTimer: false));
 
     return BlocConsumer<WorkoutBloc, WorkoutState>(
         builder: (context, state) {
@@ -56,6 +56,8 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
                 appBar: AppBar(
                   title: Text(state.workout.title.toString()),
                   leading: BackButton(onPressed: () {
+                    BlocProvider.of<WorkoutBloc>(context)
+                        .add(WorkoutInProgressEvent(workout: arguments, stopTimer: true));
                     BlocProvider.of<WorkoutBloc>(context)
                         .add(const FetchWorkoutListEvent());
                     Navigator.pushNamed(context, '/');

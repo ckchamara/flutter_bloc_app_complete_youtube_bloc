@@ -76,9 +76,9 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   }
 
 
-  int timeElapsed = 0;
 
   _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit) async {
+
     int workoutRemainingTime = event.workout.getTotalWorkoutTime();
     final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) {
       while (count <= workoutRemainingTime) {
@@ -86,18 +86,23 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
       }
     });
 
-   // await myStream.listen((eventi) {emit(WorkoutInProgressState(event.workout, eventi));});
+    bool a = true;
+    bool b = false;
 
-    // await emit.forEach(myStream, onData: (second) {
-    //   emit(WorkoutInProgressState(event.workout, second));
-    //   // print(second);
-    //   return WorkoutInProgressState(event.workout, second);
-    // });
+    Stream<int> limitedStream = myStream.asyncExpand((second) {
+      if(event.stopTimer) {
+        return Stream.empty();
+      } else {
+        return Stream.value(second);
+      }
+    });
 
+    await emit.onEach(limitedStream, onData: (second) {
+      emit(WorkoutInProgressState(event.workout, second));
+      print(second);
+    });
+    //send whole stream to woroutinprogresstate and use it there by listening to it
 
   }
-
-
-
 
 }

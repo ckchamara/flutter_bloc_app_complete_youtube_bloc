@@ -24,8 +24,10 @@ class SaveEditedExerciseEvent extends WorkoutEvent {
 
 class WorkoutInProgressEvent extends WorkoutEvent {
   final WorkoutModel workout;
+  final bool stopTimer;
 
-  WorkoutInProgressEvent({required this.workout});
+
+  WorkoutInProgressEvent({required this.workout, required this.stopTimer});
 }
 
 
