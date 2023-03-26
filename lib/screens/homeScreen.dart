@@ -55,10 +55,8 @@ class _HomeScreenState extends State<HomeScreen>
                             trailing:
                                 Text(formatDuration(workout.workoutDuration)),
                             onTap: () {
-                              BlocProvider.of<WorkoutBloc>(context)
-                                  .add(WorkoutInProgressEvent(workout));
                               Navigator.pushNamed(
-                                  context, '/workoutInProgressScreen');
+                                  context, '/workoutInProgressScreen', arguments: workout);
                             },
                           ),
                       body: ListView.builder(

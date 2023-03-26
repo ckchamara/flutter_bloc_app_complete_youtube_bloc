@@ -26,8 +26,8 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
   List<WorkoutModel> workouts = [];
 
-  _fetchWorkoutList(FetchWorkoutListEvent event,
-      Emitter<WorkoutState> emit) async {
+  _fetchWorkoutList(
+      FetchWorkoutListEvent event, Emitter<WorkoutState> emit) async {
     //async* makes function not runnable
 
     try {
@@ -76,20 +76,28 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   }
 
 
+  int timeElapsed = 0;
 
-  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit)  {
-
+  _workoutInProgress(WorkoutInProgressEvent event, Emitter<WorkoutState> emit) async {
     int workoutRemainingTime = event.workout.getTotalWorkoutTime();
     final Stream myStream = Stream.periodic(Duration(seconds: 1), (count) {
-      while(count<=3){
+      while (count <= workoutRemainingTime) {
         return count;
       }
     });
 
-     emit.forEach(myStream, onData: (second) {
-      emit(WorkoutInProgressState(event.workout, second));
-        return WorkoutInProgressState(event.workout, second);
-    });
+   // await myStream.listen((eventi) {emit(WorkoutInProgressState(event.workout, eventi));});
+
+    // await emit.forEach(myStream, onData: (second) {
+    //   emit(WorkoutInProgressState(event.workout, second));
+    //   // print(second);
+    //   return WorkoutInProgressState(event.workout, second);
+    // });
+
 
   }
+
+
+
+
 }

@@ -25,7 +25,7 @@ class SaveEditedExerciseEvent extends WorkoutEvent {
 class WorkoutInProgressEvent extends WorkoutEvent {
   final WorkoutModel workout;
 
-  WorkoutInProgressEvent(this.workout);
+  WorkoutInProgressEvent({required this.workout});
 }
 
 

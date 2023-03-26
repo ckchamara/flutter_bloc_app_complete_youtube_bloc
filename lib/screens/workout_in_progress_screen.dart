@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_app_complete/blocs/workoutBloc/workout_bloc.dart';
+import 'package:flutter_bloc_app_complete/modal/workouts.dart';
 
 import '../blocs/helpers/helper.dart';
 
@@ -14,18 +17,37 @@ class WorkoutInProgressScreen extends StatefulWidget {
 }
 
 class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
+
+  int workoutPlayedTime = 0;
+  // getTimer(){
+  //   return Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     workoutPlayedTime++; print(workoutPlayedTime);
+  //   });
+  // }
+  //
+  // final subscription = timerStream().listen((event) {
+  //   setState(() {workoutPlayedTime++;});
+  //
+  //   print(workoutPlayedTime);
+  // });
+
   @override
   Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as WorkoutModel;
+    BlocProvider.of<WorkoutBloc>(context)
+        .add(WorkoutInProgressEvent(workout: arguments));
+
     return BlocConsumer<WorkoutBloc, WorkoutState>(
         builder: (context, state) {
           if (state is WorkoutInProgressState) {
+
             Map<String, dynamic> getStats() {
-              int workoutPlayedTime = state.workoutplayedTime;
               int workoutRemainingTime =
-                  state.workout.getTotalWorkoutTime() - workoutPlayedTime;
+                  state.workout.getTotalWorkoutTime() - state.second;
 
               return {
-                "workoutPlayedTime": workoutPlayedTime,
+                "workoutPlayedTime": state.second,
                 "workoutRemainingTime": workoutRemainingTime,
               };
             }
@@ -33,11 +55,11 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
             return Scaffold(
                 appBar: AppBar(
                   title: Text(state.workout.title.toString()),
-                  leading: BackButton(
-                      onPressed: () {
-                        BlocProvider.of<WorkoutBloc>(context).add(const FetchWorkoutListEvent());
-                        Navigator.pushNamed(context, '/');
-                      }),
+                  leading: BackButton(onPressed: () {
+                    BlocProvider.of<WorkoutBloc>(context)
+                        .add(const FetchWorkoutListEvent());
+                    Navigator.pushNamed(context, '/');
+                  }),
                 ),
                 body: Container(
                   padding: const EdgeInsets.all(32),
@@ -53,7 +75,7 @@ class _WorkoutInProgressScreenState extends State<WorkoutInProgressScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(formatDuration(state.workoutplayedTime)),
+                            Text(formatDuration(getStats()['workoutPlayedTime'])),
                             DotsIndicator(
                               dotsCount: state.workout.getTotalExercises(),
                               position: 3,
